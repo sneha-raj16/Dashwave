@@ -9,6 +9,10 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
 } from "recharts";
 
 function App() {
@@ -27,6 +31,19 @@ const [showSignup, setShowSignup] = useState(false);
     { name: "May", students: 120 },
     { name: "Jun", students: 150 },
   ];
+  const pieData = [
+  { name: "BCA", value: 400 },
+  { name: "B.Tech", value: 300 },
+  { name: "BBA", value: 200 },
+  { name: "MBA", value: 150 },
+];
+
+const COLORS = [
+  "#3B82F6",
+  "#22C55E",
+  "#A855F7",
+  "#F97316",
+];
   const [showStudentForm, setShowStudentForm] = useState(false);
 
 const [students, setStudents] = useState([
@@ -176,31 +193,28 @@ const handleAddStudent = () => {
 
                 {/* Charts */}
                {/* Dashboard Middle Section */}
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+{/* Charts Section */}
+<div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
 
-  {/* Small Bar Chart */}
+  {/* Bar Chart */}
   <div
-    className={`xl:col-span-2 rounded-2xl p-6 shadow-xl ${
+    className={`rounded-2xl p-4 md:p-6 shadow-xl border min-h-[320px] ${
       darkMode
-        ? "bg-white/10"
-        : "bg-white"
+        ? "bg-white/10 border-white/10"
+        : "bg-white border-gray-200"
     }`}
   >
 
-    <div className="flex items-center justify-between mb-6">
-      <h2 className="text-2xl font-bold">
-        Student Growth
-      </h2>
+    <h2 className="text-2xl font-bold mb-6">
+      Student Growth
+    </h2>
 
-      <span className="text-sm opacity-70">
-        Last 6 Months
-      </span>
-    </div>
-
-    <div className="w-full h-[280px]">
+    <div className="w-full h-[300px]">
 
       <ResponsiveContainer width="100%" height="100%">
+
         <BarChart data={chartData}>
+
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
@@ -208,19 +222,83 @@ const handleAddStudent = () => {
           <Bar
             dataKey="students"
             fill="#3B82F6"
-            radius={[8, 8, 0, 0]}
-            barSize={35}
+            radius={[10, 10, 0, 0]}
           />
+
         </BarChart>
+
       </ResponsiveContainer>
 
     </div>
 
   </div>
 
+  
+
+  {/* Performance Card */}
+  <div
+    className={`rounded-2xl p-4 md:p-6 shadow-xl border min-h-[320px] ${
+      darkMode
+        ? "bg-white/10 border-white/10"
+        : "bg-white border-gray-200"
+    }`}
+  >
+
+    <h2 className="text-2xl font-bold mb-6">
+      Performance Overview
+    </h2>
+
+    <div className="space-y-6">
+
+      <div>
+
+        <div className="flex justify-between mb-2">
+          <span>Placement Rate</span>
+          <span>92%</span>
+        </div>
+
+        <div className="w-full bg-gray-300 rounded-full h-3">
+          <div className="bg-green-500 h-3 rounded-full w-[92%]"></div>
+        </div>
+
+      </div>
+
+      <div>
+
+        <div className="flex justify-between mb-2">
+          <span>Course Completion</span>
+          <span>81%</span>
+        </div>
+
+        <div className="w-full bg-gray-300 rounded-full h-3">
+          <div className="bg-blue-500 h-3 rounded-full w-[81%]"></div>
+        </div>
+
+      </div>
+
+      <div>
+
+        <div className="flex justify-between mb-2">
+          <span>Student Satisfaction</span>
+          <span>95%</span>
+        </div>
+
+        <div className="w-full bg-gray-300 rounded-full h-3">
+          <div className="bg-purple-500 h-3 rounded-full w-[95%]"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  
+
   {/* Quick Actions */}
   <div
-    className={`rounded-2xl p-6 shadow-xl ${
+    className={`rounded-2xl p-6 shadow-xl min-h-[320px] ${
       darkMode
         ? "bg-white/10"
         : "bg-white"
@@ -252,11 +330,11 @@ const handleAddStudent = () => {
 </div>
 
 {/* Bottom Dashboard Section */}
-<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
 
   {/* Fee Collection Status */}
   <div
-    className={`rounded-2xl p-6 shadow-xl ${
+    className={`rounded-2xl p-6 shadow-xl min-h-[320px] ${
       darkMode
         ? "bg-white/10"
         : "bg-white"
@@ -267,7 +345,7 @@ const handleAddStudent = () => {
       Fee Collection Status
     </h2>
 
-    <div className="space-y-6">
+    <div className="space-y-15">
 
       <div>
         <div className="flex justify-between mb-2">
@@ -297,7 +375,7 @@ const handleAddStudent = () => {
 
   {/* Notifications */}
   <div
-    className={`rounded-2xl p-6 shadow-xl ${
+    className={`rounded-2xl p-6 shadow-xl min-h-[320px] ${
       darkMode
         ? "bg-white/10"
         : "bg-white"
@@ -343,6 +421,55 @@ const handleAddStudent = () => {
     </div>
 
   </div>
+
+
+  {/* Pie Chart */}
+<div
+  className={`rounded-2xl p-4 md:p-6 shadow-xl border ${
+    darkMode
+      ? "bg-white/10 border-white/10"
+      : "bg-white border-gray-200"
+  }`}
+>
+
+  <h2 className="text-2xl font-bold mb-6">
+    Student Distribution
+  </h2>
+
+  <div className="w-full h-[320px]">
+
+    <ResponsiveContainer width="100%" height="100%">
+
+      <PieChart>
+
+        <Pie
+          data={pieData}
+          cx="50%"
+          cy="50%"
+          outerRadius={70}
+          dataKey="value"
+          label
+        >
+
+          {pieData.map((entry, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={COLORS[index % COLORS.length]}
+            />
+          ))}
+
+        </Pie>
+
+        <Tooltip />
+        <Legend />
+
+      </PieChart>
+
+    </ResponsiveContainer>
+
+  </div>
+
+</div>
 
 </div>
 
