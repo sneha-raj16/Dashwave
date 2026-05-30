@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 
 function Header({
+  user,
   setSidebarOpen,
   sidebar,
   darkMode,
@@ -17,7 +18,6 @@ function Header({
   setShowLogin,
   setShowSignup,
 }) {
-
   return (
     <div
       className={`border-b px-3 sm:px-4 py-2 text-sm sm:text-base sticky top-0 z-40 backdrop-blur-xl ${
@@ -27,6 +27,7 @@ function Header({
       }`}
     >
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 w-full">
+
         {/* Left */}
         <div className="flex items-center justify-between w-full lg:w-auto gap-4">
 
@@ -50,9 +51,9 @@ function Header({
         </div>
 
         {/* Right */}
-      <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 w-full lg:w-auto overflow-x-auto">
+        <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 w-full lg:w-auto overflow-x-auto">
 
-          {/* Dark Mode */}
+          {/* Theme Toggle */}
           <button
             onClick={() => setDarkMode(!darkMode)}
             className={`p-2 rounded-xl transition-all ${
@@ -68,37 +69,42 @@ function Header({
             )}
           </button>
 
-          {/* Profile */}
-          <button
-            onClick={() => setShowProfile(true)}
-            className="flex items-center gap-2  whitespace-nowrap bg-blue-500 hover:bg-blue-600 text-white px-3 sm:px-4 py-2 text-sm sm:text-base rounded-xl transition-all"
-          >
-            <User className="w-5 h-5" />
-            Profile
-          </button>
+          {user ? (
+            <>
+              {/* Profile */}
+              <button
+                onClick={() => setShowProfile(true)}
+                className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl transition-all"
+              >
+                <User className="w-5 h-5" />
+                {user.name}
+              </button>
+            </>
+          ) : (
+            <>
+              {/* Sign Up */}
+              <button
+                onClick={() => setShowSignup(true)}
+                className="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl transition-all"
+              >
+                <UserPlus className="w-5 h-5" />
+                Sign Up
+              </button>
 
-          {/* Sign Up */}
-          <button
-            onClick={() => setShowSignup(true)}
-            className="flex items-center gap-2 whitespace-nowrap bg-green-500 hover:bg-green-600 text-white px-3 sm:px-4 py-2 text-sm sm:text-base rounded-xl transition-all"
-          >
-            <UserPlus className="w-5 h-5" />
-            Sign Up
-          </button>
-
-          {/* Login */}
-          <button
-            onClick={() => setShowLogin(true)}
-            className="flex items-center gap-2 whitespace-nowrap bg-purple-500 hover:bg-purple-600 text-white px-3 sm:px-4 py-2 text-sm sm:text-base rounded-xl transition-all"
-          >
-            <LogIn className="w-5 h-5" />
-            Login
-          </button>
+              {/* Login */}
+              <button
+                onClick={() => setShowLogin(true)}
+                className="flex items-center gap-2 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-xl transition-all"
+              >
+                <LogIn className="w-5 h-5" />
+                Login
+              </button>
+            </>
+          )}
 
         </div>
 
       </div>
-
     </div>
   );
 }
